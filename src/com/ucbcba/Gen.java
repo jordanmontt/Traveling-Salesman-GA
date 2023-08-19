@@ -259,10 +259,10 @@ public class Gen {
     }
 
     public List<String> crossing(String father, String mother) {
-        List<String> descendents = new ArrayList<>(Collections.emptyList());
-        descendents.add(crossingFirstSon2(father, mother));
-        descendents.add(crossingSecondSon2(father, mother));
-        return descendents;
+        List<String> descendants = new ArrayList<>(Collections.emptyList());
+        descendants.add(crossingFirstSon2(father, mother));
+        descendants.add(crossingSecondSon2(father, mother));
+        return descendants;
     }
 
     public int probabilityAsInteger() {
@@ -326,7 +326,7 @@ public class Gen {
 
     public String simpleGeneticAlgorithm() {
         List<Pair<String, Integer>> population = generatePopulation();
-        List<Pair<String, Integer>> descendents = new ArrayList<>();
+        List<Pair<String, Integer>> descendants = new ArrayList<>();
         List<String> rouletteWheelSelection;
         int numberOfCrosses;
         Random random = new Random();
@@ -335,7 +335,7 @@ public class Gen {
         boolean doesConverge = false;
 
         while (!doesConverge) {
-            descendents.clear();
+            descendants.clear();
             numberOfCrosses = numberOfCrosses();
             rouletteWheelSelection = rouletteWheelSelection(population);
             skewedRouletteLength = rouletteWheelSelection.size();
@@ -348,22 +348,22 @@ public class Gen {
                 // Cross the individuals
                 List<String> crossResult = crossing(I1, I2);
 
-                // Obtain their descendents
+                // Obtain their descendants
                 D1 = crossResult.get(0);
                 D2 = crossResult.get(1);
 
-                // Mutate the descendents
+                // Mutate the descendants
                 D1 = mutate(D1);
                 D2 = mutate(D2);
 
-                // Insert the descendents into the descenders population
-                descendents.add(new Pair<>(D1, fitness(D1)));
-                descendents.add(new Pair<>(D2, fitness(D2)));
+                // Insert the descendants into the descenders population
+                descendants.add(new Pair<>(D1, fitness(D1)));
+                descendants.add(new Pair<>(D2, fitness(D2)));
 
                 numberOfCrosses--;
             }
-            // Join old population (population) with the new population (descendents)
-            population.addAll(descendents);
+            // Join old population (population) with the new population (descendants)
+            population.addAll(descendants);
             population = reducePopulation(population);
             generations++;
             if (doesItConverge(population))
